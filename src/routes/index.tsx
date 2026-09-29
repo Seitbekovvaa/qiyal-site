@@ -16,7 +16,6 @@ type Filter = "Все" | "Скиллы" | "Справочники";
 function SkillsLibrary() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("Все");
-  const headerRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
   const list = useMemo(() => {
@@ -34,25 +33,10 @@ function SkillsLibrary() {
 
   useEffect(() => {
     const api = motion();
-    const header = headerRef.current;
     const cards = listRef.current?.querySelectorAll("li");
     if (!api || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const tweens: Array<{ kill: () => void; scrollTrigger?: { kill: () => void } }> = [];
-    if (header) {
-      tweens.push(
-        api.gsap.from(header, {
-          y: 36,
-          opacity: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: header,
-            start: "top 88%",
-          },
-        }),
-      );
-    }
     if (cards && cards.length) {
       tweens.push(
         api.gsap.fromTo(
@@ -87,7 +71,7 @@ function SkillsLibrary() {
     <div className="qiyal-page bg-bg text-fg">
       <HeroReel />
       <div className="qiyal-catalog">
-        <header ref={headerRef} className="qiyal-masthead">
+        <header className="qiyal-masthead">
           <div className="max-w-xl">
             <p className="mb-3 font-display text-xs font-semibold uppercase tracking-[0.28em] text-accent">
               Qiyal Studio
@@ -96,7 +80,7 @@ function SkillsLibrary() {
               Скиллы
             </h1>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-muted sm:mt-4">
-              Все прикреплённые файлы: 8 скиллов и 31 справочник.
+              Все прикреплённые файлы: 8 скиллов, 31 справочник и 4 шаблона.
             </p>
           </div>
           <DownloadLink
@@ -104,7 +88,7 @@ function SkillsLibrary() {
             className="qiyal-press inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-accent px-4 text-sm font-medium text-accent-fg hover:opacity-90 sm:h-11 sm:w-auto"
           >
             <Download className="size-4" strokeWidth={1.75} />
-            Скачать все 39 файлов
+            Скачать все скиллы
           </DownloadLink>
         </header>
 

@@ -161,13 +161,14 @@
 
 .qiyal-mute {
   right: max(1rem, env(safe-area-inset-right));
-  bottom: max(3.5rem, calc(env(safe-area-inset-bottom) + 2.5rem));
+  bottom: calc(6.75rem + env(safe-area-inset-bottom));
+  z-index: 30;
 }
 
 @media (min-width: 640px) {
   .qiyal-mute {
     right: max(1.5rem, env(safe-area-inset-right));
-    bottom: max(4rem, calc(env(safe-area-inset-bottom) + 3rem));
+    bottom: calc(7.25rem + env(safe-area-inset-bottom));
   }
 }
 

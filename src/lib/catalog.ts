@@ -179,4 +179,4 @@ export const LESSONS: PackFile[] = [
   },
 ];
 
-export const ALL_PACK = [...SKILLS, ...REFERENCES];
+export const ALL_PACK = [...SKILLS, ...REFERENCES, ...LESSONS];

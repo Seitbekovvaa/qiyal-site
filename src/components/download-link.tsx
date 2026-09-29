@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import { hapticLight } from "@/lib/telegram";
-import { saveAllZip, saveMarkdown } from "@/lib/save-file";
+import { downloadViaTelegram, hapticLight } from "@/lib/telegram";
 
 type Props = {
   filename: string;
@@ -8,19 +7,27 @@ type Props = {
   children: ReactNode;
 };
 
+function fileHref(filename: string) {
+  if (filename.endsWith(".zip")) return "/qiyal-skills.zip";
+  return `/attachments/${encodeURIComponent(filename)}`;
+}
+
 export function DownloadLink({ filename, className, children }: Props) {
-  async function onClick() {
-    hapticLight();
-    if (filename.endsWith(".zip")) {
-      await saveAllZip();
-      return;
-    }
-    await saveMarkdown(filename);
-  }
+  const href = fileHref(filename);
 
   return (
-    <button type="button" className={className} onClick={() => void onClick()}>
+    <a
+      href={href}
+      download={filename}
+      target="_blank"
+      rel="noopener"
+      className={className}
+      onClick={(event) => {
+        hapticLight();
+        if (downloadViaTelegram(href, filename)) event.preventDefault();
+      }}
+    >
       {children}
-    </button>
+    </a>
   );
 }
